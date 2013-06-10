@@ -6,8 +6,8 @@ from engine import transform_matrix
 
 class Matrix():
     def __init__(self):
-        self.m = get_data()
-        self.ml = ''.join(self.m)
+        self.m = get_data() # list of strings
+        self.ml = ''.join(self.m) # string
         self.live_cell = '0'
         self.dead_cell = '.'
         self.generation = 0
@@ -25,9 +25,13 @@ class Game(wx.Frame):
         self.timer = wx.Timer(self, 1)
         self.Bind(wx.EVT_TIMER, self.timer_event, self.timer)
 
-        def get_bitmap():
-            bitmap = wx.StaticBitmap(self, bitmap=wx.Bitmap('01.png'))
+        def get_bitmap(id):
+            bitmap = wx.StaticBitmap(self, id=id, bitmap=wx.Bitmap('01.png'))
+            bitmap.Bind(wx.EVT_LEFT_UP, cell_event)
             return bitmap
+
+        def cell_event(event):
+            pass
 
         # --- next button
         def next_event(event):
@@ -63,7 +67,7 @@ class Game(wx.Frame):
 
         self.gs = wx.GridSizer(50, 50, 1, 1)
 
-        self.gs.AddMany([get_bitmap() for i in range(2500)])
+        self.gs.AddMany([get_bitmap(i) for i in range(2500)])
 
         vbox.Add(self.gs, proportion=1, flag=wx.EXPAND)
         vbox.Add(next_button, flag=wx.EXPAND|wx.TOP|wx.BOTTOM, border=4)
