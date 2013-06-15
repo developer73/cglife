@@ -25,8 +25,15 @@ class Game(wx.Frame):
         self.timer = wx.Timer(self, 1)
         self.Bind(wx.EVT_TIMER, self.next_event, self.timer)
 
+        self.bitmap0 = wx.Bitmap('0.png')
+        self.bitmap1 = wx.Bitmap('1.png')
+
         self.gs = wx.GridSizer(50, 50, 1, 1)
         self.gs.AddMany([self.get_bitmap(i) for i in range(2500)])
+
+        self.bitmaps = [item for item in self.Children \
+            if item.ClassName == u'wxStaticBitmap']
+        
         self.create_buttons()
         self.next_event()
         self.Show(True)
@@ -53,7 +60,7 @@ class Game(wx.Frame):
         self.SetSizer(vbox)
         
     def get_bitmap(self, id):
-        bitmap = wx.StaticBitmap(self, id=id, bitmap=wx.Bitmap('01.png'))
+        bitmap = wx.StaticBitmap(self, id=id, bitmap=self.bitmap0)
         bitmap.Bind(wx.EVT_LEFT_UP, self.cell_event)
         return bitmap
 
@@ -72,12 +79,12 @@ class Game(wx.Frame):
         self.pause_button.Enable()
 
     def next_event(self, event=None):
-        print "--- generation %s" % self.matrix.generation
-        for ii in range(0, 50*50-1):
-            self.gs.Show(ii)
         for ii in range(0, 50*50-1):
             if self.matrix.ml[ii] == self.matrix.live_cell:
-                self.gs.Hide(ii)
+                self.bitmaps[ii].SetBitmap(bitmap=self.bitmap1)
+            else:
+                self.bitmaps[ii].SetBitmap(bitmap=self.bitmap0)
+        print "--- generation %s" % self.matrix.generation
         self.matrix.next()
 
     def cell_event(self, event):
