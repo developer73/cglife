@@ -17,6 +17,20 @@ class Matrix():
         self.ml = ''.join(self.m)
         self.generation += 1
 
+    def update_cell(self, id, value):
+        n = 50
+        row_id = id / n
+        col_id = id % n
+
+        # replace char in the list of strings
+        # self.m[row_id][col_id] = value 
+        row = self.m[row_id]
+        row_list = list(row)
+        row_list[col_id] = value
+        self.m[row_id] = ''.join(row_list)
+        
+        self.ml = ''.join(self.m)
+        
 class Game(wx.Frame):
     def __init__(self, parent, id, title):
         wx.Frame.__init__(self, parent, id, title)
@@ -35,7 +49,7 @@ class Game(wx.Frame):
             if item.ClassName == u'wxStaticBitmap']
         
         self.create_buttons()
-        self.next_event()
+        self.update_view()
         self.Show(True)
 
     def create_buttons(self):
@@ -78,17 +92,30 @@ class Game(wx.Frame):
         self.next_button.Disable()
         self.pause_button.Enable()
 
-    def next_event(self, event=None):
+    def update_view(self):
         for ii in range(0, 50*50-1):
             if self.matrix.ml[ii] == self.matrix.live_cell:
                 self.bitmaps[ii].SetBitmap(bitmap=self.bitmap1)
             else:
                 self.bitmaps[ii].SetBitmap(bitmap=self.bitmap0)
         print "--- generation %s" % self.matrix.generation
+
+    def next_event(self, event=None):
         self.matrix.next()
+        self.update_view()
 
     def cell_event(self, event):
-        pass
+        id = event.GetEventObject().Id
+        
+        if self.matrix.ml[id] == self.matrix.live_cell:
+            bitmap = self.bitmap0
+            cell = self.matrix.dead_cell
+        else:
+            bitmap = self.bitmap1
+            cell = self.matrix.live_cell
+
+        self.matrix.update_cell(id, cell) # update the data
+        event.GetEventObject().SetBitmap(bitmap=bitmap) # update the view
 
 app = wx.App()
 Game(None, -1, "Conway's Game of Life")
