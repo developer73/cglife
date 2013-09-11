@@ -6,10 +6,23 @@ from engine import transform_matrix
 
 class Matrix():
     def __init__(self):
-        self.m = get_data() # list of strings
-        self.ml = ''.join(self.m) # string
         self.live_cell = '0'
         self.dead_cell = '.'
+        self.dimensions = (50, 50) # (rows, cols)
+        self.generation = 0
+        
+        self.init_empty_matrix()
+
+    def init_empty_matrix(self):
+        # list of strings
+        self.m = [self.dead_cell*self.dimensions[1] \
+            for item in range(self.dimensions[0])]
+
+        self.ml = ''.join(self.m) # string
+
+    def load_data(self):
+        self.m = get_data() # list of strings
+        self.ml = ''.join(self.m) # string
         self.generation = 0
 
     def next(self):
@@ -63,6 +76,9 @@ class Game(wx.Frame):
         self.pause_button.Disable()
         self.pause_button.Bind(wx.EVT_BUTTON, self.pause_event)
         
+        self.load_button = wx.Button(self, wx.ID_ANY, label = 'Load')
+        self.load_button.Bind(wx.EVT_BUTTON, self.load_event)
+        
         self.add_buttons()
 
     def add_buttons(self):
@@ -71,6 +87,7 @@ class Game(wx.Frame):
         vbox.Add(self.next_button, flag=wx.EXPAND|wx.TOP|wx.BOTTOM, border=4)
         vbox.Add(self.play_button, flag=wx.EXPAND|wx.TOP|wx.BOTTOM, border=4)
         vbox.Add(self.pause_button, flag=wx.EXPAND|wx.TOP|wx.BOTTOM, border=4)
+        vbox.Add(self.load_button, flag=wx.EXPAND|wx.TOP|wx.BOTTOM, border=4)
         self.SetSizer(vbox)
         
     def get_bitmap(self, id):
@@ -116,6 +133,11 @@ class Game(wx.Frame):
 
         self.matrix.update_cell(id, cell) # update the data
         event.GetEventObject().SetBitmap(bitmap=bitmap) # update the view
+
+    def load_event(self, event):
+        self.matrix.load_data()
+        self.update_view()
+        print '--- %s Data loaded.' % str(datetime.now())[:19]
 
 app = wx.App()
 Game(None, -1, "Conway's Game of Life")
