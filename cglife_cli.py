@@ -3,11 +3,13 @@ import time
 from input import get_data
 from engine import transform_matrix
 
+
 def clear_screen():
     """
     Clears the screen.
     """
     print '\n'*40
+
 
 def print_matrix(m):
     """
@@ -15,6 +17,7 @@ def print_matrix(m):
     """
     for line in m:
         print line
+
 
 def main():
     live_cell = '0'
@@ -28,9 +31,11 @@ def main():
     # main loop
     for ii in range(generations):
         clear_screen()
-        print "--- generation %s" % (ii + 1)
         print_matrix(m)
+        print "--- generation %s" % (ii + 1)
         m = transform_matrix(m, live_cell, dead_cell)
         time.sleep(sleep_time)
+
+    print "Application terminated successfully."
 
 main()

@@ -1,28 +1,35 @@
-import wx
+try:
+    import wx
+except:
+    print "Error. Missing library. Please install wxPython library."
+    import sys
+    sys.exit(1)
+
 from datetime import datetime
 
 from input import get_data
 from engine import transform_matrix
 
+
 class Matrix():
     def __init__(self):
         self.live_cell = '0'
         self.dead_cell = '.'
-        self.dimensions = (50, 50) # (rows, cols)
+        self.dimensions = (50, 50)  # (rows, cols)
         self.generation = 0
-        
+
         self.init_empty_matrix()
 
     def init_empty_matrix(self):
         # list of strings
-        self.m = [self.dead_cell*self.dimensions[1] \
-            for item in range(self.dimensions[0])]
+        self.m = [self.dead_cell*self.dimensions[1]
+                  for item in range(self.dimensions[0])]
 
-        self.ml = ''.join(self.m) # string
+        self.ml = ''.join(self.m)  # string
 
     def load_data(self):
-        self.m = get_data() # list of strings
-        self.ml = ''.join(self.m) # string
+        self.m = get_data()  # list of strings
+        self.ml = ''.join(self.m)  # string
         self.generation = 0
 
     def next(self):
@@ -36,14 +43,15 @@ class Matrix():
         col_id = id % n
 
         # replace char in the list of strings
-        # self.m[row_id][col_id] = value 
+        # self.m[row_id][col_id] = value
         row = self.m[row_id]
         row_list = list(row)
         row_list[col_id] = value
         self.m[row_id] = ''.join(row_list)
-        
+
         self.ml = ''.join(self.m)
-        
+
+
 class Game(wx.Frame):
     def __init__(self, parent, id, title):
         wx.Frame.__init__(self, parent, id, title)
@@ -52,44 +60,48 @@ class Game(wx.Frame):
         self.timer = wx.Timer(self, 1)
         self.Bind(wx.EVT_TIMER, self.next_event, self.timer)
 
-        self.bitmap0 = wx.Bitmap('0.png')
-        self.bitmap1 = wx.Bitmap('1.png')
+        self.bitmap0 = wx.Bitmap('assets/0.png')
+        self.bitmap1 = wx.Bitmap('assets/1.png')
 
-        self.gs = wx.GridSizer(50, 50, 1, 1)
+        self.gs = wx.GridSizer(50, 50, 2, 2)
         self.gs.AddMany([self.get_bitmap(i) for i in range(2500)])
 
-        self.bitmaps = [item for item in self.Children \
-            if item.ClassName == u'wxStaticBitmap']
-        
+        self.bitmaps = [item for item in self.Children
+                        if item.ClassName == u'wxStaticBitmap']
+
         self.create_buttons()
         self.update_view()
         self.Show(True)
 
     def create_buttons(self):
-        self.next_button = wx.Button(self, wx.ID_ANY, label = 'Next')
+        self.load_button = wx.Button(self, wx.ID_ANY, label='Load')
+        self.load_button.Bind(wx.EVT_BUTTON, self.load_event)
+
+        self.next_button = wx.Button(self, wx.ID_ANY, label='Next')
         self.next_button.Bind(wx.EVT_BUTTON, self.next_event)
 
-        self.play_button = wx.Button(self, wx.ID_ANY, label = 'Play')
+        self.play_button = wx.Button(self, wx.ID_ANY, label='Play')
         self.play_button.Bind(wx.EVT_BUTTON, self.play_event)
 
-        self.pause_button = wx.Button(self, wx.ID_ANY, label = 'Pause')
+        self.pause_button = wx.Button(self, wx.ID_ANY, label='Pause')
         self.pause_button.Disable()
         self.pause_button.Bind(wx.EVT_BUTTON, self.pause_event)
-        
-        self.load_button = wx.Button(self, wx.ID_ANY, label = 'Load')
-        self.load_button.Bind(wx.EVT_BUTTON, self.load_event)
-        
+
         self.add_buttons()
 
     def add_buttons(self):
         vbox = wx.BoxSizer(wx.VERTICAL)
         vbox.Add(self.gs, proportion=1, flag=wx.EXPAND)
-        vbox.Add(self.next_button, flag=wx.EXPAND|wx.TOP|wx.BOTTOM, border=4)
-        vbox.Add(self.play_button, flag=wx.EXPAND|wx.TOP|wx.BOTTOM, border=4)
-        vbox.Add(self.pause_button, flag=wx.EXPAND|wx.TOP|wx.BOTTOM, border=4)
-        vbox.Add(self.load_button, flag=wx.EXPAND|wx.TOP|wx.BOTTOM, border=4)
+        vbox.Add(self.load_button,
+                 flag=wx.EXPAND | wx.TOP | wx.BOTTOM, border=4)
+        vbox.Add(self.next_button,
+                 flag=wx.EXPAND | wx.TOP | wx.BOTTOM, border=4)
+        vbox.Add(self.play_button,
+                 flag=wx.EXPAND | wx.TOP | wx.BOTTOM, border=4)
+        vbox.Add(self.pause_button,
+                 flag=wx.EXPAND | wx.TOP | wx.BOTTOM, border=4)
         self.SetSizer(vbox)
-        
+
     def get_bitmap(self, id):
         bitmap = wx.StaticBitmap(self, id=id, bitmap=self.bitmap0)
         bitmap.Bind(wx.EVT_LEFT_UP, self.cell_event)
@@ -123,7 +135,7 @@ class Game(wx.Frame):
 
     def cell_event(self, event):
         id = event.GetEventObject().Id
-        
+
         if self.matrix.ml[id] == self.matrix.live_cell:
             bitmap = self.bitmap0
             cell = self.matrix.dead_cell
@@ -131,8 +143,8 @@ class Game(wx.Frame):
             bitmap = self.bitmap1
             cell = self.matrix.live_cell
 
-        self.matrix.update_cell(id, cell) # update the data
-        event.GetEventObject().SetBitmap(bitmap=bitmap) # update the view
+        self.matrix.update_cell(id, cell)  # update the data
+        event.GetEventObject().SetBitmap(bitmap=bitmap)  # update the view
 
     def load_event(self, event):
         self.matrix.load_data()

@@ -14,6 +14,7 @@ def read_from_file(filename):
     f.close()
     return lines
 
+
 def get_data():
     m = read_from_file("data/data.txt")
     # remove new line characters
