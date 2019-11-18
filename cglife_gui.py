@@ -1,7 +1,7 @@
 try:
     import wx
 except:
-    print "Error. Missing library. Please install wxPython library."
+    print("Error. Missing library. Please install wxPython library.")
     import sys
     sys.exit(1)
 
@@ -108,14 +108,14 @@ class Game(wx.Frame):
         return bitmap
 
     def pause_event(self, event):
-        print '--- %s Play paused.' % str(datetime.now())[:19]
+        print('--- %s Play paused.' % str(datetime.now())[:19])
         self.timer.Stop()
         self.play_button.Enable()
         self.next_button.Enable()
         self.pause_button.Disable()
 
     def play_event(self, event):
-        print '--- %s Play started.' % str(datetime.now())[:19]
+        print('--- %s Play started.' % str(datetime.now())[:19])
         self.timer.Start(milliseconds=1000, oneShot=False)
         self.play_button.Disable()
         self.next_button.Disable()
@@ -127,7 +127,7 @@ class Game(wx.Frame):
                 self.bitmaps[ii].SetBitmap(bitmap=self.bitmap1)
             else:
                 self.bitmaps[ii].SetBitmap(bitmap=self.bitmap0)
-        print "--- generation %s" % self.matrix.generation
+        print("--- generation %s" % self.matrix.generation)
 
     def next_event(self, event=None):
         self.matrix.next()
@@ -149,7 +149,7 @@ class Game(wx.Frame):
     def load_event(self, event):
         self.matrix.load_data()
         self.update_view()
-        print '--- %s Data loaded.' % str(datetime.now())[:19]
+        print('--- %s Data loaded.' % str(datetime.now())[:19])
 
 app = wx.App()
 Game(None, -1, "Conway's Game of Life")

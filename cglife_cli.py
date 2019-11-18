@@ -8,7 +8,7 @@ def clear_screen():
     """
     Clears the screen.
     """
-    print '\n'*40
+    print('\n'*40)
 
 
 def print_matrix(m):
@@ -16,7 +16,7 @@ def print_matrix(m):
     Prints the matrix.
     """
     for line in m:
-        print line
+        print(line)
 
 
 def main():
@@ -32,10 +32,10 @@ def main():
     for ii in range(generations):
         clear_screen()
         print_matrix(m)
-        print "--- generation %s" % (ii + 1)
+        print("--- generation %s" % (ii + 1))
         m = transform_matrix(m, live_cell, dead_cell)
         time.sleep(sleep_time)
 
-    print "Application terminated successfully."
+    print("Application terminated successfully.")
 
 main()
