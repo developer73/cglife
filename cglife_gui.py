@@ -124,9 +124,9 @@ class Game(wx.Frame):
     def update_view(self):
         for ii in range(0, 50*50-1):
             if self.matrix.ml[ii] == self.matrix.live_cell:
-                self.bitmaps[ii].SetBitmap(bitmap=self.bitmap1)
+                self.bitmaps[ii].SetBitmap(self.bitmap1)
             else:
-                self.bitmaps[ii].SetBitmap(bitmap=self.bitmap0)
+                self.bitmaps[ii].SetBitmap(self.bitmap0)
         print("--- generation %s" % self.matrix.generation)
 
     def next_event(self, event=None):
@@ -144,7 +144,7 @@ class Game(wx.Frame):
             cell = self.matrix.live_cell
 
         self.matrix.update_cell(id, cell)  # update the data
-        event.GetEventObject().SetBitmap(bitmap=bitmap)  # update the view
+        event.GetEventObject().SetBitmap(bitmap)  # update the view
 
     def load_event(self, event):
         self.matrix.load_data()
