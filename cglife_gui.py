@@ -54,7 +54,9 @@ class Matrix():
 
 class Game(wx.Frame):
     def __init__(self, parent, id, title):
-        wx.Frame.__init__(self, parent, id, title)
+        pos = wx.Point(2, 30)
+        size = wx.Size(410, 600)
+        wx.Frame.__init__(self, parent, id, title, pos, size)
         self.matrix = Matrix()
 
         self.timer = wx.Timer(self, 1)
@@ -152,5 +154,5 @@ class Game(wx.Frame):
         print('--- %s Data loaded.' % str(datetime.now())[:19])
 
 app = wx.App()
-Game(None, -1, "Conway's Game of Life")
+Game(parent=None, id=1, title="Conway's Game of Life")
 app.MainLoop()
