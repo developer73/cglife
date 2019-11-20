@@ -39,7 +39,7 @@ class Matrix():
 
     def update_cell(self, id, value):
         n = 50
-        row_id = id / n
+        row_id = id // n
         col_id = id % n
 
         # replace char in the list of strings
