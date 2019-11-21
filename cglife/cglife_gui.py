@@ -57,7 +57,7 @@ class Matrix():
 class Game(wx.Frame):
     def __init__(self, parent, id, title):
         pos = wx.Point(2, 30)
-        size = wx.Size(410, 600)
+        size = wx.Size(210, 400)
         wx.Frame.__init__(self, parent, id, title, pos, size)
         self.matrix = Matrix()
 
