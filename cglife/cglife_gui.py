@@ -7,8 +7,8 @@ except:
 
 from datetime import datetime
 
-from input import get_data
-from engine import transform_matrix
+from .input import get_data
+from .engine import transform_matrix
 
 
 class Matrix():
@@ -62,8 +62,8 @@ class Game(wx.Frame):
         self.timer = wx.Timer(self, 1)
         self.Bind(wx.EVT_TIMER, self.next_event, self.timer)
 
-        self.bitmap0 = wx.Bitmap('assets/0.png')
-        self.bitmap1 = wx.Bitmap('assets/1.png')
+        self.bitmap0 = wx.Bitmap("cglife/assets/0.png")
+        self.bitmap1 = wx.Bitmap("cglife/assets/1.png")
 
         self.gs = wx.GridSizer(50, 50, 2, 2)
         self.gs.AddMany([self.get_bitmap(i) for i in range(2500)])

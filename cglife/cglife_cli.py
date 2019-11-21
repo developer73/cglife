@@ -1,7 +1,7 @@
 import time
 
-from input import get_data
-from engine import transform_matrix
+from .input import get_data
+from .engine import transform_matrix
 
 
 def clear_screen():

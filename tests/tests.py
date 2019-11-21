@@ -1,6 +1,6 @@
 import unittest
 
-from engine import get_neighbours
+from cglife.engine import get_neighbours
 
 
 class TestNeighbours(unittest.TestCase):

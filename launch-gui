@@ -1,2 +1,2 @@
 #! /bin/sh
-python cglife_gui.py
+python -m cglife.cglife_gui

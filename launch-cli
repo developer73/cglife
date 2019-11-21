@@ -1,2 +1,2 @@
 #! /bin/sh
-python3 cglife_cli.py
+python -m cglife.cglife_cli
