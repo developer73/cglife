@@ -38,4 +38,5 @@ def main():
 
     print("Application terminated successfully.")
 
+
 main()

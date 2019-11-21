@@ -153,6 +153,7 @@ class Game(wx.Frame):
         self.update_view()
         print('--- %s Data loaded.' % str(datetime.now())[:19])
 
+
 app = wx.App()
 Game(parent=None, id=1, title="Conway's Game of Life")
 app.MainLoop()
