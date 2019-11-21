@@ -29,10 +29,10 @@ def main():
     m = get_data()
 
     # main loop
-    for ii in range(generations):
+    for generation in range(generations + 1):
         clear_screen()
         print_matrix(m)
-        print("--- generation %s" % (ii + 1))
+        print("--- generation %s" % generation)
         m = transform_matrix(m, live_cell, dead_cell)
         time.sleep(sleep_time)
 
