@@ -23,7 +23,7 @@ def main():
     live_cell = '0'
     dead_cell = '.'
 
-    sleep_time = 1
+    sleep_time = 0.2  # seconds
     generations = 10
 
     m = get_data()
