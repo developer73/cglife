@@ -1,6 +1,6 @@
 try:
     import wx
-except:
+except ImportError:
     print("Error. Missing library. Please install wxPython library.")
     import sys
     sys.exit(1)
