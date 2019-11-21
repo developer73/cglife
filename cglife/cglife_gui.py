@@ -11,11 +11,14 @@ from .input import get_data
 from .engine import transform_matrix
 
 
+BOARD_DIMENSIONS = (25, 25)  # (rows, cols)
+
+
 class Matrix():
     def __init__(self):
         self.live_cell = '0'
         self.dead_cell = '.'
-        self.dimensions = (50, 50)  # (rows, cols)
+        self.dimensions = BOARD_DIMENSIONS
         self.generation = 0
 
         self.init_empty_matrix()
@@ -38,9 +41,8 @@ class Matrix():
         self.generation += 1
 
     def update_cell(self, id, value):
-        n = 50
-        row_id = id // n
-        col_id = id % n
+        row_id = id // BOARD_DIMENSIONS[0]
+        col_id = id % BOARD_DIMENSIONS[1]
 
         # replace char in the list of strings
         # self.m[row_id][col_id] = value
@@ -65,8 +67,9 @@ class Game(wx.Frame):
         self.bitmap0 = wx.Bitmap("cglife/assets/0.png")
         self.bitmap1 = wx.Bitmap("cglife/assets/1.png")
 
-        self.gs = wx.GridSizer(50, 50, 2, 2)
-        self.gs.AddMany([self.get_bitmap(i) for i in range(2500)])
+        self.gs = wx.GridSizer(BOARD_DIMENSIONS[0], BOARD_DIMENSIONS[1], 2, 2)
+        number_of_cells = BOARD_DIMENSIONS[0] * BOARD_DIMENSIONS[1]
+        self.gs.AddMany([self.get_bitmap(i) for i in range(number_of_cells)])
 
         self.bitmaps = [item for item in self.Children
                         if item.ClassName == u'wxStaticBitmap']
@@ -124,7 +127,7 @@ class Game(wx.Frame):
         self.pause_button.Enable()
 
     def update_view(self):
-        for ii in range(0, 50*50-1):
+        for ii in range(0, BOARD_DIMENSIONS[0]*BOARD_DIMENSIONS[1]-1):
             if self.matrix.ml[ii] == self.matrix.live_cell:
                 self.bitmaps[ii].SetBitmap(self.bitmap1)
             else:
