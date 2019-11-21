@@ -12,6 +12,13 @@ class TestNeighbours(unittest.TestCase):
         data = (
             {
                 "m": [
+                    ["", "", "", ""],
+                    ["", "", "", ""],
+                ],
+                "result": 0
+            },
+            {
+                "m": [
                     ["", "0", "", ""],
                     ["", "", "", ""],
                 ],
@@ -24,8 +31,16 @@ class TestNeighbours(unittest.TestCase):
                 ],
                 "result": 2
             },
+            {
+                "m": [
+                    ["0", "0"],
+                    ["0", "0"],
+                ],
+                "result": 3
+            },
         )
 
-        for data_item in data:
-            self.assertEqual(
-                get_neighbours(data_item["m"], 1, 1, "0"), data_item["result"])
+        for index, item in enumerate(data):
+            with self.subTest(index):
+                self.assertEqual(
+                    get_neighbours(item["m"], 1, 1, "0"), item["result"])
