@@ -2,6 +2,7 @@ import unittest
 
 from cglife.engine import get_neighbours
 from cglife.engine import transform_cell
+from cglife.engine import transform_matrix
 
 
 class TestNeighbours(unittest.TestCase):
@@ -132,3 +133,39 @@ class TestTransformCell(unittest.TestCase):
             cell = transform_cell(item["m"], 1, 1, "0", ".")
             with self.subTest(index):
                 self.assertEqual(cell, item["result"])
+
+
+class TestTransformMatrix(unittest.TestCase):
+
+    def test_transform_matrix(self):
+        data = (
+            {
+                "m": [
+                    "....",
+                    "....",
+                    "....",
+                ],
+                "result": [
+                    "....",
+                    "....",
+                    "....",
+                ],
+            },
+            {
+                "m": [
+                    "000.",
+                    "0...",
+                    "0..0",
+                ],
+                "result": [
+                    "00..",
+                    "0.0.",
+                    "....",
+                ],
+            },
+        )
+
+        for index, item in enumerate(data):
+            new = transform_matrix(item["m"], live_cell="0", dead_cell=".")
+            with self.subTest(index):
+                self.assertEqual(new, item["result"])
