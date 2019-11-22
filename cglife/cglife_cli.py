@@ -5,16 +5,10 @@ from .engine import transform_matrix
 
 
 def clear_screen():
-    """
-    Clears the screen.
-    """
     print('\n'*40)
 
 
 def print_matrix(m):
-    """
-    Prints the matrix.
-    """
     for line in m:
         print(line)
 
