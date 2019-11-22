@@ -1,3 +1,7 @@
+![Game of Life](
+https://upload.wikimedia.org/wikipedia/commons/e/e0/Game_of_life_glider_gun.svg
+"Game of Life")
+
 # CGLife
 
 CGLife is an implementation of
