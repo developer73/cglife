@@ -18,7 +18,5 @@ GUI version is interactive and supports arbitrary pattern drawing.
 * To launch command line text-only version run `./launch-cli`.
 
 ## System requirements
-* Python 3 (tested on Python 3.5.3);
+* Python 3 (tested on Python 3.6.9);
 * wxPython library (for GUI version only).
-
-Tested on Debian GNU/Linux 9.11 (stretch).
