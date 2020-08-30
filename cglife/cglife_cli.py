@@ -1,15 +1,8 @@
-import sys
+import argparse
 import time
 
 from .input import get_data
 from .engine import transform_matrix
-
-
-def get_data_path(default):
-    try:
-        return sys.argv[1]
-    except IndexError:
-        return default
 
 
 def clear_screen():
@@ -21,16 +14,32 @@ def print_matrix(m):
         print(line)
 
 
+def get_args():
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument("-i", "--input",
+                        help="Path to input file",
+                        default="data/rectangle.txt")
+
+    parser.add_argument("-g", "--generations",
+                        help="Number of generations to run",
+                        default=10,
+                        type=int)
+
+    return parser.parse_args()
+
+
 def main():
     live_cell = '0'
     dead_cell = '.'
     sleep_time = 0.2  # seconds
-    generations = 10
 
-    m = get_data(get_data_path("data/rectangle.txt"))
+    args = get_args()
+    generations_total = args.generations
+    m = get_data(args.input)
 
-    for generation in range(generations + 1):
-        if generation < generations:
+    for generation in range(generations_total + 1):
+        if generation < generations_total:
             status = "Running."
         else:
             status = "Stopped."
