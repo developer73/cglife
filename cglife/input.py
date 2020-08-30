@@ -15,8 +15,8 @@ def read_from_file(filename):
     return lines
 
 
-def get_data():
-    m = read_from_file("data/data.txt")
+def get_data(path="data/rectangle.txt"):
+    m = read_from_file(path)
     # remove new line characters
     m = [item.rstrip('\n') for item in m]
     return m

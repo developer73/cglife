@@ -1,7 +1,15 @@
+import sys
 import time
 
 from .input import get_data
 from .engine import transform_matrix
+
+
+def get_data_path(default):
+    try:
+        return sys.argv[1]
+    except IndexError:
+        return default
 
 
 def clear_screen():
@@ -16,13 +24,11 @@ def print_matrix(m):
 def main():
     live_cell = '0'
     dead_cell = '.'
-
     sleep_time = 0.2  # seconds
     generations = 10
 
-    m = get_data()
+    m = get_data(get_data_path("data/rectangle.txt"))
 
-    # main loop
     for generation in range(generations + 1):
         if generation < generations:
             status = "Running."
