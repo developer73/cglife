@@ -24,13 +24,16 @@ def main():
 
     # main loop
     for generation in range(generations + 1):
+        if generation < generations:
+            status = "Running."
+        else:
+            status = "Stopped."
+
         clear_screen()
         print_matrix(m)
-        print("--- generation %s" % generation)
+        print(f"{status} Generation {generation}.")
         m = transform_matrix(m, live_cell, dead_cell)
         time.sleep(sleep_time)
-
-    print("Application terminated successfully.")
 
 
 main()
